@@ -2,6 +2,7 @@
 
 use App\Models\Property;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,16 +29,27 @@ Route::prefix('admin')->group(function(){
         
         return view('admin.property.index');
     });
-    
+
     Route::get('/property_management/edit', function () {
         
         return view('admin.property.edit');
     });
     
     Route::get('/property_data', function(){
-        $properties = Property::all();
 
-        return response()->json(['data' => $properties]);
+        $properties = Property::query();
+        
+        return DataTables::of($properties)
+            ->addColumn('action', function ($property) {
+                $editBtn = '<a href="' . '" class="edit btn btn-primary btn-sm">Edit</a>';
+                
+                $deleteBtn = '<button type="button" data-id="' . $property->id . '" 
+                                class="delete btn btn-danger btn-sm ml-1">Delete</button>';
+                
+                return '<div class="btn-group" role="group">' . $editBtn . $deleteBtn . '</div>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     })->name('properties.data');
 
 });

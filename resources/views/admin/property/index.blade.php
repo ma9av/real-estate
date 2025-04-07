@@ -15,6 +15,7 @@
             <th>Bedrooms</th>
             <th>Bathrooms</th>
             <th>Area</th>
+            <th>Actions</th>
         </tr>
     </thead>
 </table>

@@ -39,7 +39,8 @@
                 { data: 'price' },
                 { data: 'bedrooms' },
                 { data: 'bathrooms' },
-                { data: 'area' }
+                { data: 'area' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
     });
