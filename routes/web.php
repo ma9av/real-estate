@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserManagementController;
 use App\Models\Property;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\Facades\DataTables;
@@ -16,8 +17,13 @@ use Yajra\DataTables\Facades\DataTables;
 */
 
 Route::get('/', function () {
-    return view('layout');
+    return view('home');
 });
+
+Route::get('/listing', function () {
+    return view('listing.index');
+});
+
 
 Route::prefix('admin')->group(function(){
 
@@ -41,15 +47,18 @@ Route::prefix('admin')->group(function(){
         
         return DataTables::of($properties)
             ->addColumn('action', function ($property) {
-                $editBtn = '<a href="' . '" class="edit btn btn-primary btn-sm">Edit</a>';
+                $editBtn = '<a href="' . '" class=""><i class="bi bi-pen"></i></a>';
                 
                 $deleteBtn = '<button type="button" data-id="' . $property->id . '" 
-                                class="delete btn btn-danger btn-sm ml-1">Delete</button>';
+                                class=""><i class="bi bi-trash3"></i></button>';
                 
-                return '<div class="btn-group" role="group">' . $editBtn . $deleteBtn . '</div>';
+                return '<div class="btn-group gap-2" role="group">' . $editBtn . $deleteBtn . '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
     })->name('properties.data');
+
+    Route::get('/user_management', [UserManagementController::class,'index'])->name('user_management.index');
+    Route::get('/user_management/', [UserManagementController::class,'getData'])->name('user_management.data');
 
 });

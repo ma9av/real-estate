@@ -4,6 +4,7 @@
     <title>Admin Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body { display: flex; min-height: 100vh; }
         .sidebar { width: 200px; background: #343a40; padding-top: 1rem; }
@@ -16,6 +17,7 @@
     <div class="sidebar">
         <a href="/admin/dashboard"> Dashboard </a>
         <a href="/admin/property_management"> Property Manager</a>
+        <a href="/admin/user_management"> User Manager</a>
     </div>
     <div class="content">
         @yield('content')
@@ -43,6 +45,23 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
         });
+
+        $('#userTable').DataTable({
+            processing: true,
+            ajax: "{{ route('properties.data') }}",            
+            columns: [
+                { data: 'id' },
+                { data: 'title' },
+                { data: 'description' },
+                { data: 'address' },
+                { data: 'price' },
+                { data: 'bedrooms' },
+                { data: 'bathrooms' },
+                { data: 'area' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ]
+        });
+
     });
     </script>
   @stack('scripts')
